@@ -1,9 +1,13 @@
+package main;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
+
+import entity.Player;
 
 // subclass of JPanel with some concrete choices
 public class GamePanel extends JPanel implements Runnable{
@@ -12,10 +16,10 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTileSize = 16; // 16x16 tile size
     final int scale = 4;
 
-    final int tileSize = originalTileSize * scale; // 64x64 actual tile size
+    // needs to be public for access in Player class
+    public final int tileSize = originalTileSize * scale; // 64x64 actual tile size
 
     // to decide how big our game screen is we can decide the number of tiles
-
     final int maxScreenCol = 4 * scale; // 16
     final int maxScreenRow = 3 * scale; // 12
 
@@ -30,6 +34,9 @@ public class GamePanel extends JPanel implements Runnable{
     
     // runs something at some rate
     Thread gameThread; 
+
+    // Player class
+    Player player = new Player(this,keyH);
 
     // Set Player's default position. in Java (0,0) is top left corner
     // right and down are increasing direction
@@ -141,18 +148,8 @@ public class GamePanel extends JPanel implements Runnable{
     // updating player coordinates
     public void update(){
 
-        if(keyH.upPressed == true){
-            playerY -= playerSpeed;
-        }
-        else if(keyH.downPressed == true){
-            playerY += playerSpeed;
-        }
-        else if(keyH.leftPressed == true){
-            playerX -= playerSpeed;
-        }
-        else if(keyH.rightPressed == true){
-            playerX += playerSpeed;
-        }
+        player.update();
+
     }
 
     // Character object
@@ -163,9 +160,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        player.draw(g2);
 
         g2.dispose();
 
