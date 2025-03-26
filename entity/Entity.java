@@ -11,4 +11,9 @@ public class Entity{
     // use BufferedImage to store image files
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public String direction;
+
+    // counting intervals to alternative between movement sprites
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
+    public int spriteFrames = 16;
 }

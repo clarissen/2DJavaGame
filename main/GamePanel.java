@@ -38,12 +38,6 @@ public class GamePanel extends JPanel implements Runnable{
     // Player class
     Player player = new Player(this,keyH);
 
-    // Set Player's default position. in Java (0,0) is top left corner
-    // right and down are increasing direction
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
-
     // creating a Constructor of GamePanel 
     public GamePanel(){
 

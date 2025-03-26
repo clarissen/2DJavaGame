@@ -25,10 +25,12 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues(){
+        // Set Player's default position. in Java (0,0) is top left corner
+        // right and down are increasing direction
         x = 100;
         y = 100;
-        speed = 4;
-        direction = "down";
+        speed = 4; // constant velocity
+        direction = "down"; // starting direction
     }
 
     public void getPlayerImage(){
@@ -53,24 +55,43 @@ public class Player extends Entity{
 
     public void update(){
 
-        if(keyH.upPressed == true){
-            direction = "up";
-            y -= speed;
-        }
-        else if(keyH.downPressed == true){
-            direction = "down";
-            y += speed;
-        }
-        else if(keyH.leftPressed == true){
-            direction = "left";
-            x -= speed;
-        }
-        else if(keyH.rightPressed == true){
-            direction = "right";
-            x += speed;
-        }
+        if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true 
+                || keyH.rightPressed == true){
 
+            if(keyH.upPressed == true){
+                direction = "up";
+                y -= speed;
+            }
+            else if(keyH.downPressed == true){
+                direction = "down";
+                y += speed;
+            }
+            else if(keyH.leftPressed == true){
+                direction = "left";
+                x -= speed;
+            }
+            else if(keyH.rightPressed == true){
+                direction = "right";
+                x += speed;
+            }
+    
+            // Player image changes 1 -> 2 OR 2 -> 1 every 16 frames
+            spriteCounter++; // ticks set by spriteCounter
+            Entity E = new Entity(); // creating a new instance of Entity
+            int spriteFrames = E.spriteFrames; // in order to call spriteFrames
+            if(spriteCounter > spriteFrames){
+                if(spriteNum == 1){
+                    spriteNum = 2;
+                }
+                else if(spriteNum == 2){
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
+    
+        }
     }
+
 
     public void draw(Graphics2D g2){
 
@@ -78,16 +99,36 @@ public class Player extends Entity{
 
         switch(direction){
             case "up":
+            if(spriteNum == 1){
                 image = up1;
+            }
+            if(spriteNum == 2){
+                image = up2;
+            }
                 break;
             case "down":
+            if(spriteNum == 1){
                 image = down1;
+            }
+            if(spriteNum == 2){
+                image = down2;
+            }
                 break;  
             case "left":
+            if(spriteNum == 1){
                 image = left1;
+            }
+            if(spriteNum == 2){
+                image = left2;
+            }
                 break;  
             case "right":
+            if(spriteNum == 1){
                 image = right1;
+            }
+            if(spriteNum == 2){
+                image = right2;
+            }
                 break;    
         }
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
